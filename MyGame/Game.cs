@@ -8,6 +8,8 @@ namespace MyGame
     static class Game
     {
         public static BaseObject[] _objs;
+        private static Bullet _bullet;
+        private static Asteroid[] _asteroids;
 
         private static BufferedGraphicsContext _context;
         public static BufferedGraphics Buffer;
@@ -37,7 +39,7 @@ namespace MyGame
 
             Load();
 
-            Timer timer = new Timer { Interval = 100 };
+            Timer timer = new Timer { Interval = 10 };
             timer.Start();
             timer.Tick += Timer_Tick;
         }
@@ -46,49 +48,36 @@ namespace MyGame
         public static void Load()
         {
             Random rnd = new Random();
-            _objs = new BaseObject[30];
-            for (int i = 0; i < _objs.Length / 2; i++)
-            {
-                // Случайный размер астероида
-                int sizeInt = rnd.Next(5, 20);
-                Size rndSize = new Size(sizeInt, sizeInt);
-
-                _objs[i] = new BaseObject(new Point(Height, i * 20), new Point(-i, -i), rndSize);
-            }
+            _objs = new BaseObject[10];
+            _bullet = new Bullet(new Point(0, rnd.Next(0, Game.Height)), new Point(10, 0), new Size(4, 1));
+            _asteroids = new Asteroid[30];
+            
 
             // Закружем звезды
-            for (int i = _objs.Length / 2; i < _objs.Length; i++)
+            for (int i = 0; i < _objs.Length; i++)
             {
-                // Случайная положение звезды
-                int posX = rnd.Next(0, Width);
-                int posY = rnd.Next(0, Height);
-                Point rndPoint = new Point(posX, posY);
+                int r = rnd.Next(5, 50);
+                _objs[i] = new Star(new Point(rnd.Next(0, Game.Width), rnd.Next(0, Game.Height)), new Point(-r/5, r/5), new Size(3, 3));
 
-                // Движение в левую сторону со случайной скоростью и отклонением по вертикали
-                int rndSpeed = rnd.Next(1, 10);
-                int rndY = rnd.Next(-1, 1);
-                Point rndDirecion = new Point(-rndSpeed, rndY);
+            }
 
-                // Случайный размер звезды
-                int sizeInt = rnd.Next(5, 20);
-                Size rndSize = new Size(sizeInt, sizeInt);
-
-                _objs[i] = new Star(rndPoint, rndDirecion, rndSize);
+            // // Закружем астероиды
+            for (int i = 0; i < _asteroids.Length; i++)
+            {
+                int r = rnd.Next(5, 50);
+                _asteroids[i] = new Asteroid(new Point(rnd.Next(0, Game.Width), rnd.Next(0, Game.Height)), new Point(-r / 5, r), new Size(r, r));
             }
         }
 
         //---------------------------------------------------------------------
         public static void Draw()
-        {
-            // Проверяем вывод графики
-            Buffer.Graphics.Clear(Color.Black);
-            Buffer.Graphics.DrawRectangle(Pens.White, new Rectangle(100, 100, 200, 200));
-            Buffer.Graphics.FillEllipse(Brushes.Wheat, new Rectangle(100, 100, 200, 200));
-            Buffer.Render();
-
+        { 
             Buffer.Graphics.Clear(Color.Black);
             foreach (BaseObject obj in _objs)
                 obj.Draw();
+            foreach (Asteroid obj in _asteroids)
+                obj.Draw();
+            _bullet.Draw();
             Buffer.Render();
         }
 
@@ -97,6 +86,16 @@ namespace MyGame
         {
             foreach (BaseObject obj in _objs)
                 obj.Update();
+            foreach (Asteroid a in _asteroids)
+            {
+                a.Update();
+                if (a.Collision(_bullet)) { 
+                    System.Media.SystemSounds.Hand.Play();
+                    a.RegenerateObject();
+                    _bullet.RegenerateObject();
+                }
+            }
+            _bullet.Update();
         }
 
         //---------------------------------------------------------------------
