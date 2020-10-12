@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.Drawing;
+using System.Collections.Generic;
 
 namespace MyGame
 {
     static class Game
     {
         public static BaseObject[] _objs;
-        private static Bullet _bullet;
-        private static Asteroid[] _asteroids;
+        private static List<Bullet> _bullets = new List<Bullet>();
+        private static List<Asteroid> _asteroids = new List<Asteroid>();
+        private static int asteroidsCountOnStart = 3; 
         private static Ship _ship = new Ship(new Point(10, 400), new Point(5, 5), new Size(10, 10));
 
         private static BufferedGraphicsContext _context;
@@ -55,9 +57,8 @@ namespace MyGame
         public static void Load()
         {
             _objs = new BaseObject[10];
-            _bullet = new Bullet(new Point(0, rnd.Next(0, Game.Height)), new Point(10, 0), new Size(4, 1));
-            _asteroids = new Asteroid[10];
-            
+                    
+            //_asteroids = new Asteroid[asteroidsCountOnStart];            
 
             // Закружем звезды
             for (int i = 0; i < _objs.Length; i++)
@@ -68,10 +69,12 @@ namespace MyGame
             }
 
             // // Закружем астероиды
-            for (int i = 0; i < _asteroids.Length; i++)
+            for (int i = 1; i <= asteroidsCountOnStart; i++)
             {
-                int r = rnd.Next(5, 50);
-                _asteroids[i] = new Asteroid(new Point(rnd.Next(0, Game.Width), rnd.Next(0, Game.Height)), new Point(-r / 5, r), new Size(r, r));
+                int r = rnd.Next(20, 100);
+                Asteroid asteroid = new Asteroid(new Point(rnd.Next(0, Game.Width), rnd.Next(0, Game.Height)), new Point(-r / 5, r), new Size(r, r));
+                _asteroids.Add(asteroid);
+                    
             }
         }
 
@@ -85,7 +88,8 @@ namespace MyGame
             {
                 a?.Draw();
             }
-            _bullet?.Draw();
+            foreach (Bullet b in _bullets) b.Draw();
+
             _ship?.Draw();
             if (_ship != null)
                 Buffer.Graphics.DrawString("Energy:" + _ship.Energy, SystemFonts.DefaultFont, Brushes.White, 0, 0);
@@ -96,23 +100,40 @@ namespace MyGame
         public static void Update()
         {
             foreach (BaseObject obj in _objs) obj.Update();
-            _bullet?.Update();
-            for (var i = 0; i < _asteroids.Length; i++)
+            foreach (Bullet b in _bullets) b.Update();
+
+            // Если астероиды все сбиты, то создаем новый набор
+            if (_asteroids.Count == 0)
             {
-                if (_asteroids[i] == null) continue;
-                _asteroids[i].Update();
-                if (_bullet != null && _bullet.Collision(_asteroids[i]))
+                asteroidsCountOnStart++;
+                Load();
+                return;
+            }
+
+            //for (var i = 0; i < _asteroids.Length; i++)
+            foreach (Asteroid currentAsteroid in _asteroids)
+            {                
+                currentAsteroid.Update();
+
+                // проверяем попадания пуль в астероиды
+                for (int j = 0; j < _bullets.Count; j++)
+                    if (_bullets[j].Collision(currentAsteroid))
+                    {
+                        System.Media.SystemSounds.Hand.Play();
+                        _asteroids.Remove(currentAsteroid);
+                        //currentAsteroid = null;
+                        _bullets.RemoveAt(j);
+                        return;
+                        // j--;
+                    }
+
+                // проверка столкновения корабля с астероидом
+                if (_ship.Collision(currentAsteroid))
                 {
-                    System.Media.SystemSounds.Hand.Play();
-                    _asteroids[i] = null;
-                    _bullet = null;
-                    continue;
-                }
-                if (!_ship.Collision(_asteroids[i])) continue;
-                var rnd = new Random();
-                _ship?.EnergyLow(rnd.Next(1, 10));
-                System.Media.SystemSounds.Asterisk.Play();
-                if (_ship.Energy <= 0) _ship?.Die();
+                    _ship.EnergyLow(rnd.Next(1, 10));
+                    System.Media.SystemSounds.Asterisk.Play();
+                    if (_ship.Energy <= 0) _ship.Die();
+                }              
             }
         }
 
@@ -126,7 +147,7 @@ namespace MyGame
         //---------------------------------------------------------------------
         private static void Form_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.ControlKey) _bullet = new Bullet(new Point(_ship.Rect.X + 10, _ship.Rect.Y + 4), new Point(4, 0), new Size(4, 1));
+            if (e.KeyCode == Keys.ControlKey) _bullets.Add(new Bullet(new Point(_ship.Rect.X + 10, _ship.Rect.Y + 4), new Point(4, 0), new Size(4, 1)));
             if (e.KeyCode == Keys.Up) _ship.Up();
             if (e.KeyCode == Keys.Down) _ship.Down();
         }

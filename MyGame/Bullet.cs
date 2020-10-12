@@ -18,19 +18,6 @@ namespace MyGame
         public override void Update()
         {
             Pos.X = Pos.X + 3;
-
-
-            if (Pos.X > Game.Width) RegenerateObject();
-        }
-
-        public override void RegenerateObject()
-        {
-            Random rnd = new Random();
-            // создаем в случайном место c левого края
-            Pos = new Point(0, rnd.Next(0, Game.Height));
-
-            // в направлении вправо
-            Dir = new Point(rnd.Next(5, 15), rnd.Next(-2, 2));
         }
 
     }
