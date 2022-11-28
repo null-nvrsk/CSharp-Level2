@@ -23,6 +23,24 @@ namespace WpfLesson_5_8
         public MainWindow()
         {
             InitializeComponent();
+            Departments departs = new Departments();
+            lvDepartments.ItemsSource = departs;
+            departs.GenerateRandom(20);
+
+            Employees employees = new Employees();
+            lvEmployees.ItemsSource = employees;
+            employees.GenerateRandom(100);
+        }
+
+        private void btnDeptAdd_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnEmployeeAdd_Click(object sender, RoutedEventArgs e)
+        {
+            EmployeeWindow employeeWindow = new EmployeeWindow();
+            employeeWindow.ShowDialog();
         }
     }
 }
