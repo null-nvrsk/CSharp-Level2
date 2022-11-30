@@ -15,20 +15,4 @@ namespace WpfLesson_5_8
         public bool IsFired { get; set; }
         public DateTime DateOfDismissal { get; set; }
     }
-
-    class Employees : List<Employee>
-    {
-        public void GenerateRandom(int count = 20)
-        {
-            for (int i = 1; i <= count; i++)
-            {
-                Add(new Employee() { 
-                    Surname = $"Фамилия {i}",
-                    FirstName = $"Имя  {i}",
-                    PatronymicName = $"Очество  {i}"
-                });
-            }
-        }
-
-    }
 }

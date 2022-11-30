@@ -68,7 +68,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Department.cs" />
+    <Compile Include="Departments.cs" />
     <Compile Include="Employee.cs" />
+    <Compile Include="Employees.cs" />
     <Compile Include="EmployeeWindow.xaml.cs">
       <DependentUpon>EmployeeWindow.xaml</DependentUpon>
     </Compile>
