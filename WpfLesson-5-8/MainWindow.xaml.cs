@@ -1,17 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using System.Windows;
 
 namespace WpfLesson_5_8
 {
@@ -34,13 +21,28 @@ namespace WpfLesson_5_8
 
         private void btnDeptAdd_Click(object sender, RoutedEventArgs e)
         {
+            MessageBox.Show("Отдел типа добавлен");
+        }
 
+        private void btnDeptDel_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Отдел типа удален");
         }
 
         private void btnEmployeeAdd_Click(object sender, RoutedEventArgs e)
         {
             EmployeeWindow employeeWindow = new EmployeeWindow();
             employeeWindow.ShowDialog();
+        }
+
+        private void btnEmployeeDel_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Сотрудник типа удален");
+        }
+
+        private void btnEmployeeEdit_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Типа открылось окно просмотра информации о сотруднике");
         }
     }
 }

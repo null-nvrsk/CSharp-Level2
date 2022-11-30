@@ -16,16 +16,16 @@
             <ColumnDefinition MinWidth="200" Width="2*"/>
             <ColumnDefinition MinWidth="300" Width="3*"/>
         </Grid.ColumnDefinitions>
-        <TextBlock x:Name="textBlock" HorizontalAlignment="Center" Margin="10,4,0,0" TextWrapping="Wrap" Text="Отделы" VerticalAlignment="Top" FontSize="16"/>
-        <TextBlock x:Name="textBlock_Copy" HorizontalAlignment="Center" Margin="10,4,0,0" TextWrapping="Wrap" Text="Сотрудники" VerticalAlignment="Top" Grid.Column="1" FontSize="16"/>
-        <ListView x:Name="lvDepartments" Grid.Row="1" Margin="4">
+        <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource HeaderStyle}">Отделы</TextBlock>
+        <TextBlock Grid.Row="0" Grid.Column="1" Style="{StaticResource HeaderStyle}">Сотрудники</TextBlock>
+        <ListView x:Name="lvDepartments" Grid.Row="1">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Отдел" Width="auto" DisplayMemberBinding="{Binding Name}" />
                 </GridView>
             </ListView.View>            
         </ListView>
-        <ListView x:Name="lvEmployees" Grid.Column="1" Grid.Row="1" Margin="4">
+        <ListView x:Name="lvEmployees" Grid.Column="1" Grid.Row="1">
             <!--<ListView.View>
                 <GridView>
                     <GridViewColumn Header="Фамилия" Width="auto" DisplayMemberBinding="{Binding Surname}" />
@@ -45,7 +45,7 @@
                         <TextBlock Text="{Binding PatronymicName}" FontWeight="Bold" />
                         <TextBlock Text=" (" />
 
-                        <TextBlock Text= "{Binding Birthday.ToSting()}" />
+                        <TextBlock Text= "{Binding Birthday.ToString()}" />
                         <TextBlock Text=") - " />
 
                         <TextBlock Text="{Binding Email}" TextDecorations="Underline" Foreground="Blue" Cursor="Hand" />
@@ -53,11 +53,17 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <Button x:Name="btnDeptAdd" Content="Добавить" HorizontalAlignment="Left" Height="30" Margin="10,10,0,0" Grid.Row="2" VerticalAlignment="Top" Width="100" FontSize="16" Click="btnDeptAdd_Click"/>
-        <Button x:Name="btnDeptDel" Content="Удалить" HorizontalAlignment="Left" Height="30" Margin="115,10,0,0" Grid.Row="2" VerticalAlignment="Top" Width="100" FontSize="16" RenderTransformOrigin="0.434,0.4"/>
-        <Button x:Name="btnEmployeeAdd" Content="Добавить" HorizontalAlignment="Left" Height="30" Margin="10,10,0,0" Grid.Row="2" VerticalAlignment="Top" Width="100" FontSize="16" Grid.Column="1" Click="btnEmployeeAdd_Click"/>
-        <Button x:Name="btnEmployeeDel" Content="Удалить" HorizontalAlignment="Left" Height="30" Margin="115,10,0,0" Grid.Row="2" VerticalAlignment="Top" Width="100" FontSize="16" Grid.Column="1"/>
-        <Button x:Name="btnEmployeeEdit" Content="Просмотр" HorizontalAlignment="Left" Height="30" Margin="220,10,0,0" Grid.Row="2" VerticalAlignment="Top" Width="100" FontSize="16" Grid.Column="1"/>
+        <StackPanel Grid.Column="0" Grid.Row="3" Orientation="Horizontal">
+            <Button x:Name="btnDeptAdd" Content="Добавить" Click="btnDeptAdd_Click"/>
+            <Button x:Name="btnDeptDel" Content="Удалить" Click="btnDeptDel_Click" />
+        </StackPanel>
 
+        <StackPanel Grid.Column="1" Grid.Row="3" Orientation="Horizontal">
+            <Button x:Name="btnEmployeeAdd" Content="Добавить" Click="btnEmployeeAdd_Click"/>
+            <Button x:Name="btnEmployeeDel" Content="Удалить" Click="btnEmployeeDel_Click" />
+            <Button x:Name="btnEmployeeEdit" Content="Просмотр" Click="btnEmployeeEdit_Click" />
+
+        </StackPanel>
+        
     </Grid>
 </Window>
