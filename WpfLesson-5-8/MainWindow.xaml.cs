@@ -7,15 +7,16 @@ namespace WpfLesson_5_8
     /// </summary>
     public partial class MainWindow : Window
     {
+        private static Departments departments = new Departments();
+        private static Employees employees = new Employees();
+
         public MainWindow()
         {
             InitializeComponent();
-            Departments departs = new Departments();
-            lvDepartments.ItemsSource = departs;
-            departs.GenerateRandom(20);
+            lvDepartments.ItemsSource = departments.collection;
+            departments.GenerateRandom(20);
 
-            Employees employees = new Employees();
-            lvEmployees.ItemsSource = employees;
+            lvEmployees.ItemsSource = employees.collection;
             employees.GenerateRandom(100);
         }
 
@@ -26,7 +27,12 @@ namespace WpfLesson_5_8
 
         private void btnDeptDel_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Отдел типа удален");
+            Department selDepartment = (Department)lvDepartments.SelectedItem;
+            if (selDepartment != null)
+            {
+                departments.collection.Remove(selDepartment);
+                MessageBox.Show($"Отдел \"{selDepartment.Name}\" удален");
+            }
         }
 
         private void btnEmployeeAdd_Click(object sender, RoutedEventArgs e)
@@ -37,7 +43,12 @@ namespace WpfLesson_5_8
 
         private void btnEmployeeDel_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Сотрудник типа удален");
+            Employee selEmployee = (Employee)lvEmployees.SelectedItem;
+            if(selEmployee != null)
+            {
+                employees.collection.Remove(selEmployee);
+                MessageBox.Show($"Сотрудник {selEmployee.FirstName} {selEmployee.Surname} удален");
+            }
         }
 
         private void btnEmployeeEdit_Click(object sender, RoutedEventArgs e)

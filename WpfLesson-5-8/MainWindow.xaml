@@ -45,7 +45,7 @@
                         <TextBlock Text="{Binding PatronymicName}" FontWeight="Bold" />
                         <TextBlock Text=" (" />
 
-                        <TextBlock Text= "{Binding Birthday.ToString()}" />
+                        <TextBlock Text= "{Binding Birthday}" />
                         <TextBlock Text=") - " />
 
                         <TextBlock Text="{Binding Email}" TextDecorations="Underline" Foreground="Blue" Cursor="Hand" />
