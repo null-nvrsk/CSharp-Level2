@@ -1,4 +1,4 @@
-﻿<Window x:Class="WpfLesson_5_8.EmployeeWindow"
+﻿<Window x:Class="WpfLesson_5_8.AddEmployeeWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -68,12 +68,12 @@
         <CheckBox x:Name="cbFired" Grid.Column="1" Grid.Row="6" Content="уволен"/>
 
         <TextBlock Grid.Row="7" Grid.Column="0" Text="Дата увольнения"/>
-        <DatePicker Grid.Row="7" Grid.Column="1" IsEnabled="False"/>
+        <DatePicker x:Name="dpDateOfDismissal" Grid.Row="7" Grid.Column="1" IsEnabled="False"/>
 
         <StackPanel Grid.Row="8" Grid.ColumnSpan="2" Orientation="Horizontal"
                     HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="10">
-            <Button x:Name="btnSave" Content="Сохранить"/>
-            <Button x:Name="btnCancel" Content="Отмена"/>
+            <Button x:Name="btnSave" Content="Добавить" IsDefault="True" />
+            <Button x:Name="btnCancel" Content="Отмена" IsCancel="True" />
         </StackPanel>
     </Grid>
 </Window>

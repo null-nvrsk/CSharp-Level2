@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace WpfLesson_5_8
 {
     /// <summary>
-    /// Interaction logic for EmployeeWindow.xaml
+    /// Interaction logic for EditEmployeeWindow.xaml
     /// </summary>
-    public partial class EmployeeWindow : Window
+    public partial class EditEmployeeWindow : Window
     {
-        public EmployeeWindow()
+        public EditEmployeeWindow()
         {
             InitializeComponent();
         }

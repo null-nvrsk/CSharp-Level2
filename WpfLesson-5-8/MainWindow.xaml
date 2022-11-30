@@ -37,12 +37,11 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <WrapPanel>
-                        <!--<TextBlock Text="Name: " />-->
-                        <TextBlock Text="{Binding Surname}" FontWeight="Bold" />
-                        <TextBlock Text=" " />
-                        <TextBlock Text="{Binding FirstName}" FontWeight="Bold" />
-                        <TextBlock Text=" " />
-                        <TextBlock Text="{Binding PatronymicName}" FontWeight="Bold" />
+                        <TextBlock Text = "{Binding Surname}" FontWeight="Bold" />
+                        <TextBlock Text = " " />
+                        <TextBlock Text = "{Binding FirstName}" FontWeight="Bold" />
+                        <TextBlock Text = " " />
+                        <TextBlock Text = "{Binding PatronymicName}" FontWeight="Bold" />
                         <TextBlock Text=" (" />
 
                         <TextBlock Text= "{Binding Birthday}" />
@@ -55,14 +54,14 @@
         </ListView>
         <StackPanel Grid.Column="0" Grid.Row="3" Orientation="Horizontal">
             <Button x:Name="btnDeptAdd" Content="Добавить" Click="btnDeptAdd_Click"/>
-            <Button x:Name="btnDeptDel" Content="Удалить" Click="btnDeptDel_Click" />
+            <Button x:Name="btnDeptEdit" Content="Редактировать" Click="btnDeptEdit_Click" />
+            <Button x:Name="btnDeptDel" Content="Удалить" Click="btnDeptDel_Click"  />
         </StackPanel>
 
         <StackPanel Grid.Column="1" Grid.Row="3" Orientation="Horizontal">
             <Button x:Name="btnEmployeeAdd" Content="Добавить" Click="btnEmployeeAdd_Click"/>
+            <Button x:Name="btnEmployeeEdit" Content="Редактировать" Click="btnEmployeeEdit_Click" />
             <Button x:Name="btnEmployeeDel" Content="Удалить" Click="btnEmployeeDel_Click" />
-            <Button x:Name="btnEmployeeEdit" Content="Просмотр" Click="btnEmployeeEdit_Click" />
-
         </StackPanel>
         
     </Grid>
